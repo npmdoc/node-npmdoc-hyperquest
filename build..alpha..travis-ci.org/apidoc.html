@@ -1,0 +1,290 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/substack/hyperquest"
+
+    >hyperquest (v2.1.2)</a>
+</h1>
+<h4>make streaming http requests</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.hyperquest">module hyperquest</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.hyperquest.delete">
+            function <span class="apidocSignatureSpan">hyperquest.</span>delete
+            <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.hyperquest.get">
+            function <span class="apidocSignatureSpan">hyperquest.</span>get
+            <span class="apidocSignatureSpan">(uri, opts, cb, extra)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.hyperquest.post">
+            function <span class="apidocSignatureSpan">hyperquest.</span>post
+            <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.hyperquest.put">
+            function <span class="apidocSignatureSpan">hyperquest.</span>put
+            <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.hyperquest" id="apidoc.module.hyperquest">module hyperquest</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.hyperquest.delete" id="apidoc.element.hyperquest.delete">
+        function <span class="apidocSignatureSpan">hyperquest.</span>delete
+        <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">delete = function (uri, opts, cb) {
+    return hyperquest(uri, opts, cb, { method: &#x27;DELETE&#x27; });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+
+## var req = hyperquest.post(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+
+## var req = hyperquest.<span class="apidocCodeKeywordSpan">delete</span>(uri, opts, cb)
+
+Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+
+# events
+
+## req.on(&#x27;request&#x27;, function (req) {})
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.hyperquest.get" id="apidoc.element.hyperquest.get">
+        function <span class="apidocSignatureSpan">hyperquest.</span>get
+        <span class="apidocSignatureSpan">(uri, opts, cb, extra)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function hyperquest(uri, opts, cb, extra) {
+    if (typeof uri === &#x27;object&#x27;) {
+        cb = opts;
+        opts = uri;
+        uri = undefined;
+    }
+    if (typeof opts === &#x27;function&#x27;) {
+      cb = opts;
+      opts = undefined;
+    }
+    if (!opts) opts = {};
+    if (uri !== undefined) opts.uri = uri;
+    if (extra) opts.method = extra.method;
+
+    var req = new Req(opts);
+    var ws = req.duplex &#x26;&#x26; through();
+    var rs = through();
+
+    var dup = req.duplex ? duplexer(ws, rs) : rs;
+    if (!req.duplex) {
+        rs.writable = false;
+    }
+    dup.request = req;
+    dup.setHeader = bind(req, req.setHeader);
+    dup.setLocation = bind(req, req.setLocation);
+
+    var closed = false;
+    dup.on(&#x27;close&#x27;, function () { closed = true });
+
+    process.nextTick(function () {
+        if (closed) return;
+        dup.on(&#x27;close&#x27;, function () { r.destroy() });
+
+        var r = req._send();
+        r.on(&#x27;error&#x27;, bind(dup, dup.emit, &#x27;error&#x27;));
+        dup.emit(&#x27;request&#x27;, r);
+
+        r.on(&#x27;response&#x27;, function (res) {
+            dup.response = res;
+            dup.emit(&#x27;response&#x27;, res);
+            if (req.duplex) res.pipe(rs)
+            else {
+                res.on(&#x27;data&#x27;, function (buf) { rs.push(buf) });
+                res.on(&#x27;end&#x27;, function () { rs.push(null) });
+            }
+        });
+
+        if (req.duplex) {
+            ws.pipe(r);
+        }
+        else r.end();
+    });
+
+    if (cb) {
+        dup.on(&#x27;error&#x27;, cb);
+        dup.on(&#x27;response&#x27;, bind(dup, cb, null));
+    }
+    return dup;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Set an outgoing header `key` to `value`.
+
+## req.setLocation(uri);
+
+Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+
+## var req = hyperquest.<span class="apidocCodeKeywordSpan">get</span>(uri, opts, cb)
+
+Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+
+## var req = hyperquest.put(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.hyperquest.post" id="apidoc.element.hyperquest.post">
+        function <span class="apidocSignatureSpan">hyperquest.</span>post
+        <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">post = function (uri, opts, cb) {
+    return hyperquest(uri, opts, cb, { method: &#x27;POST&#x27; });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+
+## var req = hyperquest.put(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+
+## var req = hyperquest.<span class="apidocCodeKeywordSpan">post</span>(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+
+## var req = hyperquest.delete(uri, opts, cb)
+
+Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.hyperquest.put" id="apidoc.element.hyperquest.put">
+        function <span class="apidocSignatureSpan">hyperquest.</span>put
+        <span class="apidocSignatureSpan">(uri, opts, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">put = function (uri, opts, cb) {
+    return hyperquest(uri, opts, cb, { method: &#x27;PUT&#x27; });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+
+## var req = hyperquest.get(uri, opts, cb)
+
+Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+
+## var req = hyperquest.<span class="apidocCodeKeywordSpan">put</span>(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+
+## var req = hyperquest.post(uri, opts, cb)
+
+Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
