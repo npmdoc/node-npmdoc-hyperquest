@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/substack/hyperquest"
-
-    >hyperquest (v2.1.2)</a>
+    <a href="https://github.com/substack/hyperquest">hyperquest (v2.1.2)</a>
 </h1>
 <h4>make streaming http requests</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.hyperquest">module hyperquest</a><ol>
 
@@ -162,12 +155,12 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function hyperquest(uri, opts, cb, extra) {
-    if (typeof uri === &#x27;object&#x27;) {
+    if (typeof uri === 'object') {
         cb = opts;
         opts = uri;
         uri = undefined;
     }
-    if (typeof opts === &#x27;function&#x27;) {
+    if (typeof opts === 'function') {
       cb = opts;
       opts = undefined;
     }
@@ -176,7 +169,7 @@
     if (extra) opts.method = extra.method;
 
     var req = new Req(opts);
-    var ws = req.duplex &#x26;&#x26; through();
+    var ws = req.duplex &amp;&amp; through();
     var rs = through();
 
     var dup = req.duplex ? duplexer(ws, rs) : rs;
@@ -188,23 +181,23 @@
     dup.setLocation = bind(req, req.setLocation);
 
     var closed = false;
-    dup.on(&#x27;close&#x27;, function () { closed = true });
+    dup.on('close', function () { closed = true });
 
     process.nextTick(function () {
         if (closed) return;
-        dup.on(&#x27;close&#x27;, function () { r.destroy() });
+        dup.on('close', function () { r.destroy() });
 
         var r = req._send();
-        r.on(&#x27;error&#x27;, bind(dup, dup.emit, &#x27;error&#x27;));
-        dup.emit(&#x27;request&#x27;, r);
+        r.on('error', bind(dup, dup.emit, 'error'));
+        dup.emit('request', r);
 
-        r.on(&#x27;response&#x27;, function (res) {
+        r.on('response', function (res) {
             dup.response = res;
-            dup.emit(&#x27;response&#x27;, res);
+            dup.emit('response', res);
             if (req.duplex) res.pipe(rs)
             else {
-                res.on(&#x27;data&#x27;, function (buf) { rs.push(buf) });
-                res.on(&#x27;end&#x27;, function () { rs.push(null) });
+                res.on('data', function (buf) { rs.push(buf) });
+                res.on('end', function () { rs.push(null) });
             }
         });
 
@@ -215,8 +208,8 @@
     });
 
     if (cb) {
-        dup.on(&#x27;error&#x27;, cb);
-        dup.on(&#x27;response&#x27;, bind(dup, cb, null));
+        dup.on('error', cb);
+        dup.on('response', bind(dup, cb, null));
     }
     return dup;
 }</pre></li>
@@ -233,23 +226,23 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">delete = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;DELETE&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'DELETE' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.post(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">delete</span>(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'DELETE' })`.
 
 # events
 
-## req.on(&#x27;request&#x27;, function (req) {})
+## req.on('request', function (req) {})
 ...</pre></li>
     </ul>
 
@@ -263,12 +256,12 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function hyperquest(uri, opts, cb, extra) {
-    if (typeof uri === &#x27;object&#x27;) {
+    if (typeof uri === 'object') {
         cb = opts;
         opts = uri;
         uri = undefined;
     }
-    if (typeof opts === &#x27;function&#x27;) {
+    if (typeof opts === 'function') {
       cb = opts;
       opts = undefined;
     }
@@ -277,7 +270,7 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     if (extra) opts.method = extra.method;
 
     var req = new Req(opts);
-    var ws = req.duplex &#x26;&#x26; through();
+    var ws = req.duplex &amp;&amp; through();
     var rs = through();
 
     var dup = req.duplex ? duplexer(ws, rs) : rs;
@@ -289,23 +282,23 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     dup.setLocation = bind(req, req.setLocation);
 
     var closed = false;
-    dup.on(&#x27;close&#x27;, function () { closed = true });
+    dup.on('close', function () { closed = true });
 
     process.nextTick(function () {
         if (closed) return;
-        dup.on(&#x27;close&#x27;, function () { r.destroy() });
+        dup.on('close', function () { r.destroy() });
 
         var r = req._send();
-        r.on(&#x27;error&#x27;, bind(dup, dup.emit, &#x27;error&#x27;));
-        dup.emit(&#x27;request&#x27;, r);
+        r.on('error', bind(dup, dup.emit, 'error'));
+        dup.emit('request', r);
 
-        r.on(&#x27;response&#x27;, function (res) {
+        r.on('response', function (res) {
             dup.response = res;
-            dup.emit(&#x27;response&#x27;, res);
+            dup.emit('response', res);
             if (req.duplex) res.pipe(rs)
             else {
-                res.on(&#x27;data&#x27;, function (buf) { rs.push(buf) });
-                res.on(&#x27;end&#x27;, function () { rs.push(null) });
+                res.on('data', function (buf) { rs.push(buf) });
+                res.on('end', function () { rs.push(null) });
             }
         });
 
@@ -316,8 +309,8 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     });
 
     if (cb) {
-        dup.on(&#x27;error&#x27;, cb);
-        dup.on(&#x27;response&#x27;, bind(dup, cb, null));
+        dup.on('error', cb);
+        dup.on('response', bind(dup, cb, null));
     }
     return dup;
 }</pre></li>
@@ -327,15 +320,15 @@ Set an outgoing header `key` to `value`.
 
 ## req.setLocation(uri);
 
-Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+Set the location if you didn't specify it in the `hyperquest()` call.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">get</span>(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.put(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 ...</pre></li>
     </ul>
 
@@ -349,23 +342,23 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">post = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;POST&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'POST' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.put(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">post</span>(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 
 ## var req = hyperquest.delete(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'DELETE' })`.
 ...</pre></li>
     </ul>
 
@@ -379,23 +372,23 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">put = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;PUT&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'PUT' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+Set the location if you didn't specify it in the `hyperquest()` call.
 
 ## var req = hyperquest.get(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">put</span>(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.post(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 ...</pre></li>
     </ul>
 
@@ -414,12 +407,12 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function hyperquest(uri, opts, cb, extra) {
-    if (typeof uri === &#x27;object&#x27;) {
+    if (typeof uri === 'object') {
         cb = opts;
         opts = uri;
         uri = undefined;
     }
-    if (typeof opts === &#x27;function&#x27;) {
+    if (typeof opts === 'function') {
       cb = opts;
       opts = undefined;
     }
@@ -428,7 +421,7 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
     if (extra) opts.method = extra.method;
 
     var req = new Req(opts);
-    var ws = req.duplex &#x26;&#x26; through();
+    var ws = req.duplex &amp;&amp; through();
     var rs = through();
 
     var dup = req.duplex ? duplexer(ws, rs) : rs;
@@ -440,23 +433,23 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
     dup.setLocation = bind(req, req.setLocation);
 
     var closed = false;
-    dup.on(&#x27;close&#x27;, function () { closed = true });
+    dup.on('close', function () { closed = true });
 
     process.nextTick(function () {
         if (closed) return;
-        dup.on(&#x27;close&#x27;, function () { r.destroy() });
+        dup.on('close', function () { r.destroy() });
 
         var r = req._send();
-        r.on(&#x27;error&#x27;, bind(dup, dup.emit, &#x27;error&#x27;));
-        dup.emit(&#x27;request&#x27;, r);
+        r.on('error', bind(dup, dup.emit, 'error'));
+        dup.emit('request', r);
 
-        r.on(&#x27;response&#x27;, function (res) {
+        r.on('response', function (res) {
             dup.response = res;
-            dup.emit(&#x27;response&#x27;, res);
+            dup.emit('response', res);
             if (req.duplex) res.pipe(rs)
             else {
-                res.on(&#x27;data&#x27;, function (buf) { rs.push(buf) });
-                res.on(&#x27;end&#x27;, function () { rs.push(null) });
+                res.on('data', function (buf) { rs.push(buf) });
+                res.on('end', function () { rs.push(null) });
             }
         });
 
@@ -467,8 +460,8 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
     });
 
     if (cb) {
-        dup.on(&#x27;error&#x27;, cb);
-        dup.on(&#x27;response&#x27;, bind(dup, cb, null));
+        dup.on('error', cb);
+        dup.on('response', bind(dup, cb, null));
     }
     return dup;
 }</pre></li>
@@ -478,15 +471,15 @@ Set an outgoing header `key` to `value`.
 
 ## req.setLocation(uri);
 
-Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+Set the location if you didn't specify it in the `hyperquest()` call.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">get</span>(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.put(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 ...</pre></li>
     </ul>
 
@@ -500,23 +493,23 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">delete = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;DELETE&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'DELETE' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.post(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">delete</span>(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'DELETE' })`.
 
 # events
 
-## req.on(&#x27;request&#x27;, function (req) {})
+## req.on('request', function (req) {})
 ...</pre></li>
     </ul>
 
@@ -530,23 +523,23 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">post = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;POST&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'POST' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.put(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">post</span>(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 
 ## var req = hyperquest.delete(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'DELETE' })`.
 ...</pre></li>
     </ul>
 
@@ -560,23 +553,23 @@ Return a readable stream from `hyperquest(..., { method: &#x27;DELETE&#x27; })`.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">put = function (uri, opts, cb) {
-    return hyperquest(uri, opts, cb, { method: &#x27;PUT&#x27; });
+    return hyperquest(uri, opts, cb, { method: 'PUT' });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Set the location if you didn&#x27;t specify it in the `hyperquest()` call.
+Set the location if you didn't specify it in the `hyperquest()` call.
 
 ## var req = hyperquest.get(uri, opts, cb)
 
-Return a readable stream from `hyperquest(..., { method: &#x27;GET&#x27; })`.
+Return a readable stream from `hyperquest(..., { method: 'GET' })`.
 
 ## var req = hyperquest.<span class="apidocCodeKeywordSpan">put</span>(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;PUT&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'PUT' })`.
 
 ## var req = hyperquest.post(uri, opts, cb)
 
-Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
+Return a duplex stream from `hyperquest(..., { method: 'POST' })`.
 ...</pre></li>
     </ul>
 
@@ -589,3 +582,4 @@ Return a duplex stream from `hyperquest(..., { method: &#x27;POST&#x27; })`.
     ]
 </div>
 </div>
+</body></html>

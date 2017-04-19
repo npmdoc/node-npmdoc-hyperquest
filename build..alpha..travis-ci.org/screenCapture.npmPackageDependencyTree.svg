@@ -1,25 +1,28 @@
-<svg height="350" width="720" xmlns="http://www.w3.org/2000/svg">
-<rect height="350" fill="#555" width="720"></rect>
+<svg height="398" width="720" xmlns="http://www.w3.org/2000/svg">
+<rect height="398" fill="#555" width="720"></rect>
 <text fill="#7f7" font-family="Courier New" font-size="12" xml:space="preserve">
-<tspan x="10" y="26">└─┬ hyperquest@2.1.2 </tspan>
-<tspan x="10" y="42">  ├─┬ buffer-from@0.1.1 </tspan>
-<tspan x="10" y="58">  │ └─┬ is-array-buffer-x@1.2.1 </tspan>
-<tspan x="10" y="74">  │   ├─┬ has-to-string-tag-x@1.2.0 </tspan>
-<tspan x="10" y="90">  │   │ └── has-symbol-support-x@1.2.0 </tspan>
-<tspan x="10" y="106">  │   ├─┬ is-object-like-x@1.2.0 </tspan>
-<tspan x="10" y="122">  │   │ ├── is-function-x@1.2.0 </tspan>
-<tspan x="10" y="138">  │   │ └── is-primitive@2.0.0 </tspan>
-<tspan x="10" y="154">  │   └─┬ to-string-tag-x@1.2.0 </tspan>
-<tspan x="10" y="170">  │     ├── lodash.isnull@3.0.0 </tspan>
-<tspan x="10" y="186">  │     └── validate.io-undefined@1.0.3 </tspan>
-<tspan x="10" y="202">  ├─┬ duplexer2@0.0.2 </tspan>
-<tspan x="10" y="218">  │ └─┬ readable-stream@1.1.14 </tspan>
-<tspan x="10" y="234">  │   ├── core-util-is@1.0.2 </tspan>
-<tspan x="10" y="250">  │   ├── inherits@2.0.3 </tspan>
-<tspan x="10" y="266">  │   ├── isarray@0.0.1 </tspan>
-<tspan x="10" y="282">  │   └── string_decoder@0.10.31 </tspan>
-<tspan x="10" y="298">  └─┬ through2@0.6.5 </tspan>
-<tspan x="10" y="314">    ├── readable-stream@1.0.34 </tspan>
-<tspan x="10" y="330">    └── xtend@4.0.1</tspan>
+<tspan x="10" y="26">2 megabytes installed</tspan>
+<tspan x="10" y="42"></tspan>
+<tspan x="10" y="58">node_modules</tspan>
+<tspan x="10" y="74">└─┬ hyperquest@2.1.2 </tspan>
+<tspan x="10" y="90">  ├─┬ buffer-from@0.1.1 </tspan>
+<tspan x="10" y="106">  │ └─┬ is-array-buffer-x@1.2.1 </tspan>
+<tspan x="10" y="122">  │   ├─┬ has-to-string-tag-x@1.2.0 </tspan>
+<tspan x="10" y="138">  │   │ └── has-symbol-support-x@1.2.0 </tspan>
+<tspan x="10" y="154">  │   ├─┬ is-object-like-x@1.2.0 </tspan>
+<tspan x="10" y="170">  │   │ ├── is-function-x@1.2.0 </tspan>
+<tspan x="10" y="186">  │   │ └── is-primitive@2.0.0 </tspan>
+<tspan x="10" y="202">  │   └─┬ to-string-tag-x@1.2.0 </tspan>
+<tspan x="10" y="218">  │     ├── lodash.isnull@3.0.0 </tspan>
+<tspan x="10" y="234">  │     └── validate.io-undefined@1.0.3 </tspan>
+<tspan x="10" y="250">  ├─┬ duplexer2@0.0.2 </tspan>
+<tspan x="10" y="266">  │ └─┬ readable-stream@1.1.14 </tspan>
+<tspan x="10" y="282">  │   ├── core-util-is@1.0.2 </tspan>
+<tspan x="10" y="298">  │   ├── inherits@2.0.3 </tspan>
+<tspan x="10" y="314">  │   ├── isarray@0.0.1 </tspan>
+<tspan x="10" y="330">  │   └── string_decoder@0.10.31 </tspan>
+<tspan x="10" y="346">  └─┬ through2@0.6.5 </tspan>
+<tspan x="10" y="362">    ├── readable-stream@1.0.34 </tspan>
+<tspan x="10" y="378">    └── xtend@4.0.1</tspan>
 </text>
 </svg>
